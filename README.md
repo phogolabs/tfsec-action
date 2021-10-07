@@ -1,48 +1,31 @@
-<p align="center">
-  <img width="354" src="./tfsec.png">
-</p>
+# tfsec-action
 
-# tfsec-pr-commenter-action
-Add comments to pull requests where tfsec checks have failed
+Scan your Terraform code for vulnerabilities with TfSec.
 
-To add the action, add `tfsec_pr_commenter.yml` into the `.github/workflows` directory in the root of your Github project.
+## Usage
 
-The contents of `tfsec_pr_commenter.yml` should be;
+The workflow, usually declared in `.github/workflows/tfsec.yaml` under your Go project repository, looks like:
 
 ```yaml
-name: tfsec-pr-commenter
+name: tfsec
+
 on:
   pull_request:
+    branches: [ main ]
+
 jobs:
   tfsec:
-    name: tfsec PR commenter
+    name: tfsec scanner
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clone repo
-        uses: actions/checkout@master
-      - name: tfsec
-        uses: aquasecurity/tfsec-pr-commenter-action@main
-        with:
-          github_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Run TfSec
+        uses: phogolabs/tfsec-action@v2.0.0
 ```
 
-On each pull request and subsequent commit, tfsec will run and add comments to the PR where tfsec has failed. 
+## References
 
-The comment will only be added once per transgression.
-
-## Optional inputs
-
-There are a number of optional inputs that can be used in the `with:` block.
-
-**working_directory** - the directory to scan in, defaults to `.`, ie current working directory
-
-**tfsec_version** - the version of tfsec to use, defaults to `latest`
-
-**commenter_version** - the version of the commenter to use, defaults to `latest`
-
-## Example PR Comment
-
-The screenshot below demonstrates the comments that can be expected when using the action
-
-![Example PR Comment](images/pr_commenter.png)
+- https://github.com/aquasecurity/tfsec

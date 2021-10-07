@@ -1,31 +1,22 @@
 name: "Run tfsec PR commenter"
-description: "Runs tfsec and adds comments to the PR where checks have failed"
-author: "Owen Rumney"
+description: "Scan your Terraform code for vulnerabilities with tfsec"
+
+branding:
+  icon: "check"
+  color: "purple"
+
+author: "Svetlin Ralchev"
 
 inputs:
-  github_token:
-    description: "GITHUB_TOKEN"
-    required: true
   working_directory:
+    description: Current working directory that contains the terraform source code
     required: false
-    description: |
-      Directory to run the action on, from the repo root.
-      Default is . ( root of the repository)
     default: "."
-  tfsec_version:
-    required: false
-    description: The version of tfsec to use, defaults to latest
-    default: latest
-  commenter_version:
-    required: false
-    description: The version of the PR commenter code to run, defaults to latest
-    default: latest
+
 outputs:
   tfsec-return-code:
     description: "tfsec command return code"
+
 runs:
   using: "docker"
   image: "Dockerfile"
-branding:
-  icon: "git-pull-request"
-  color: "purple"

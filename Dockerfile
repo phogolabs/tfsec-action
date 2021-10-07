@@ -1,8 +1,11 @@
-FROM alpine:3.12
+FROM aquasec/tfsec-ci:v0.58
 
-RUN apk --no-cache --update add bash git \
-    && rm -rf /var/cache/apk/*
+USER root
+# enable the entry point
+COPY main.sh /usr/bin/main
+# make sure that the entry point has the correct attributes
+RUN chmod +x /usr/bin/main
+# rootless
+USER nobody
 
-COPY entrypoint.sh /entrypoint.sh
-
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/usr/bin/main"]
