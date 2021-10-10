@@ -1,4 +1,4 @@
-name: "Run tfsec PR commenter"
+name: "Run tfsec"
 description: "Scan your Terraform code for vulnerabilities with tfsec"
 
 branding:
@@ -12,6 +12,18 @@ inputs:
     description: Current working directory that contains the terraform source code
     required: false
     default: "."
+  config_file:
+    description: "The path to the config file."
+    required: false
+  report_file:
+    description: "The path to write the report."
+    required: false
+  report_format:
+    description: "The report format (default, json, csv, checkstyle, junit, sarif)."
+    required: false
+  tfsec_args:
+    description: "Space seperated args specified here will be added during tfsec execution."
+    required: false
 
 outputs:
   tfsec-return-code:
